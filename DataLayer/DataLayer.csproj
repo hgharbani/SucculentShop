@@ -73,6 +73,7 @@
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="MetaData\UserMetaData.cs" />
+    <Compile Include="ViewModel\AccountViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="MyModel.edmx">
