@@ -1,22 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Mvc;
 using DataLayer;
 using System.Web.Security;
 using DataLayer.ViewModel;
+using MyEshop;
+
 namespace SucculentShop.Controllers
 {
     public class AccountController : Controller
     {
       
-        // GET: Account
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Route("Register")]
         public ActionResult Register()
         {
             return View();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="registerViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
+        [Route("Register")]
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel registerViewModel)
         {
@@ -37,11 +52,15 @@ namespace SucculentShop.Controllers
 #pragma warning restore CS0618 // Type or member is obsolete
                         ActiveCode = Guid.NewGuid().ToString(),
                         RoleId = 1,
-                        IsActive = true,
+                        IsActive = false,
                         RegisterDate = DateTime.Now
                     };
                     db.Users.Add(user);
                     db.SaveChanges();
+                    //Send Active Email
+                    var body = PartialToStringClass.RenderPartialView("ManageEmail", "ActivetionEmail", user);
+                     SendEmail.Send(user.Email, "فعال سازی حساب", body);
+                    //end Active Email
                     return View("SuccessRegister", user);
                 }
                 else
@@ -52,16 +71,85 @@ namespace SucculentShop.Controllers
             }
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Route("Login")]
         public ActionResult Login()
         {
+            return View(new LoginViewModel());
+        }
+       
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="loginViewModel"></param>
+        /// <param name="ReturnUrl"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Login")]
+        public ActionResult Login(LoginViewModel loginViewModel,string ReturnUrl="/")
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new MyEshop_DbEntities())
+                {
+                    var passwordHashCode =
+                        FormsAuthentication.HashPasswordForStoringInConfigFile(loginViewModel.Password, "MD5");
+                    var user = db.Users.SingleOrDefault(a =>
+                        a.Email.ToLower() == loginViewModel.Email.Trim().ToLower() && a.Password == passwordHashCode);
+                    if (user != null)
+                    {
+                        if (user.IsActive)
+                        {
+                            FormsAuthentication.SetAuthCookie(user.UserName, loginViewModel.RememberMe);
+                            return Redirect(ReturnUrl);
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("Email", "حساب کاربری فعال نمی باشد");
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Email", "کاربری با اطلاعات فوق یافت نشد");
+                    }
+                }
+
+
+            }
+
             return View();
         }
-        public ActionResult EditAccount()
+
+        public ActionResult ActiveUser(string id)
+        {
+            using (var db=new MyEshop_DbEntities())
+            {
+                var user = db.Users.SingleOrDefault(a => a.ActiveCode == id);
+                if (user == null)
+                {
+                    HttpNotFound();
+                }
+
+                user.IsActive = true;
+                user.ActiveCode = Guid.NewGuid().ToString();
+                db.SaveChanges();
+                return View(user);
+            }
+        }
+
+        [Route("ForgetPassword")]
+        public ActionResult ForgetPassword()
         {
             return View();
-
         }
-        public ActionResult RecoveryAccount()
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ForgetPassword(ForgetPasswordViewModel model)
         {
             return View();
 
@@ -70,6 +158,16 @@ namespace SucculentShop.Controllers
         {
             return View();
 
+        }
+       
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            return Redirect("/Login");
         }
     }
 }

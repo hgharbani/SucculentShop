@@ -10,6 +10,7 @@ using DataLayer;
 
 namespace SucculentShop.Areas.Admin.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private MyEshop_DbEntities db = new MyEshop_DbEntities();

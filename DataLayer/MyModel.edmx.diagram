@@ -5,9 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="c75353e7ed9143d995c983ce9f8651d2" Name="Diagram1">
-        <EntityTypeShape EntityType="MyEshop_DbModel.Role" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyEshop_DbModel.User" Width="1.5" PointX="3.875" PointY="0.875" />
-        <AssociationConnector Association="MyEshop_DbModel.FK_Users_Roles" />
+        <EntityTypeShape EntityType="MyEshop_DbModel.Role" Width="1.5" PointX="0.75" PointY="1.5" />
+        <EntityTypeShape EntityType="MyEshop_DbModel.User" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="MyEshop_DbModel.FK_User_Role" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

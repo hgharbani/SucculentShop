@@ -21,6 +21,7 @@ namespace DataLayer
         public string Password { get; set; }
         public string Email { get; set; }
         public string ActiveCode { get; set; }
+        public string ImageUser { get; set; }
         public bool IsActive { get; set; }
         public System.DateTime RegisterDate { get; set; }
     }
