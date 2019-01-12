@@ -6,11 +6,12 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using DataLayer;
 
 namespace SucculentShop.Areas.Admin.Controllers
 {
-    [Authorize]
+   
     public class UsersController : Controller
     {
         private MyEshop_DbEntities db = new MyEshop_DbEntities();
@@ -49,17 +50,27 @@ namespace SucculentShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserId,RoleId,UserName,Password,Email,ActiveCode,IsActive,RegisterDate")] User user)
+        public ActionResult Create([Bind(Include = "UserId,RoleId,UserName,Password,Email,IsActive")] User userModel)
         {
             if (ModelState.IsValid)
             {
+                var user=new User()
+                {
+                    UserName = userModel.UserName,
+                    RoleId = userModel.RoleId,
+                    Password =  FormsAuthentication.HashPasswordForStoringInConfigFile(userModel.Password, "MD5"),
+                    Email = userModel.Email.Trim().ToLower(),
+                    ActiveCode = Guid.NewGuid().ToString(),
+                    IsActive = userModel.IsActive,
+                    RegisterDate = DateTime.Now
+                };
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "RoleTittle", user.RoleId);
-            return View(user);
+            ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "RoleTittle", userModel.RoleId);
+            return View(userModel);
         }
 
         // GET: Admin/Users/Edit/5

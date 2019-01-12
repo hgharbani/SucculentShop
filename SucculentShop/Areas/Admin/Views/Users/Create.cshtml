@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
+    <title>افزودن کاربر</title>
 </head>
 <body>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
@@ -22,7 +22,7 @@
         @Html.AntiForgeryToken()
         
         <div class="form-horizontal">
-            <h4>User</h4>
+            <h4>کاربر</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
@@ -57,18 +57,10 @@
                 </div>
             </div>
     
-            <div class="form-group">
-                @Html.LabelFor(model => model.ActiveCode, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ActiveCode, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ActiveCode, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
+           <div class="form-group">
                 @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <div class="checkbox">
+                    <div class="checkbox pull-right">
                         @Html.EditorFor(model => model.IsActive)
                         @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
                     </div>
@@ -76,16 +68,8 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.RegisterDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.RegisterDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.RegisterDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="ثبت کاربر" class="btn btn-default" />
                 </div>
             </div>
         </div>

@@ -16,13 +16,21 @@ namespace DataLayer
     {
         [Key]
         public int UserId { get; set; }
+        [DisplayName("نقش کاربری")]
         public int RoleId { get; set; }
+        [DisplayName("نام کاربری")]
         public string UserName { get; set; }
+        [DisplayName("کلمه عبور")]
+        [Required(ErrorMessage = "لطفا {0} وارد شود.")]
         public string Password { get; set; }
+        [DisplayName("ایمیل")]
         public string Email { get; set; }
+        [DisplayName("کد فعال سازی")]
         public string ActiveCode { get; set; }
+        [DisplayName("وضعیت")]
         public string ImageUser { get; set; }
         public bool IsActive { get; set; }
+        [DisplayName("تاریخ ثبت نام")]
         public System.DateTime RegisterDate { get; set; }
     }
 }

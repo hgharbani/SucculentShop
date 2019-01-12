@@ -240,6 +240,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\DateConvertor.cs" />
     <Compile Include="Utilities\PartialToStringClass.cs" />
     <Compile Include="Utilities\SacolentProviderRole.cs" />
     <Compile Include="Utilities\SendEmail.cs" />

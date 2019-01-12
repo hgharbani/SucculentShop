@@ -24,6 +24,7 @@ namespace DataLayer
         public bool IsActive { get; set; }
         public System.DateTime RegisterDate { get; set; }
         public string ImageUser { get; set; }
+   
         public string UserName { get; set; }
     
         public virtual Role Role { get; set; }
