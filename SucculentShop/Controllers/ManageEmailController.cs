@@ -11,7 +11,12 @@ namespace SucculentShop.Controllers
         // GET: ManageEmail
         public ActionResult ActivetionEmail()
         {
-            return View();
+            return PartialView();
+        }
+
+        public ActionResult RecoveryPassword()
+        {
+            return PartialView();
         }
     }
 }

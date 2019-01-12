@@ -11,6 +11,12 @@
         <h3>شما به این بخش دسترسی ندارید</h3>
     </div>
 }
+@if (Request.QueryString["recovery"] != null)
+{
+    <div class="alert alert-success">
+        <h3>کلمه عبور با موفقیت تغییر کرد.</h3>
+    </div>
+}
     <h2>ورود به سایت</h2>
 @using (Html.BeginForm()) 
 {
@@ -48,7 +54,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <a href="/ForgetPassword">کلمه عبور را فراموش کرده ام</a>
-                <input type="submit" value="ورد به سایت" class="btn btn-primary"/>
+               
             </div>
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="ورد به سایت" class="btn btn-primary"/>

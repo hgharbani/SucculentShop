@@ -149,17 +149,72 @@ namespace SucculentShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ForgetPassword(ForgetPasswordViewModel model)
+        [Route("ForgetPassword")]
+        public ActionResult ForgetPassword(ForgetPasswordViewModel forget)
         {
+            if (ModelState.IsValid)
+            {
+                using (var db=new MyEshop_DbEntities())
+                {
+                    var user = db.Users.SingleOrDefault(a =>a.Email.ToLower() == forget.Email.Trim().ToLower() );
+                    if (user != null)
+                    {
+                        if (user.IsActive)
+                        {
+                            //Send Active Email
+                            var body = PartialToStringClass.RenderPartialView("ManageEmail", "RecoveryPassword", user);
+                            SendEmail.Send(user.Email, "بازیابی کلمه عبور", body);
+                            //end Active Email
+                            
+                            return View("SuccessForgetPassword",user);
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("Email", "حساب کاربری فعال نمی باشد");
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Email", "کاربری با اطلاعات فوق یافت نشد");
+                    }
+                }
+            }
             return View();
 
         }
-        public ActionResult DeleteAccount()
-        {
-            return View();
 
+        public ActionResult RecoveryPassword(string id)
+        {
+            using (var db = new MyEshop_DbEntities())
+            {
+                var user = db.Users.SingleOrDefault(a => a.ActiveCode == id);
+                if (user == null)
+                {
+                    HttpNotFound();
+                }
+
+                return View();
+            }
         }
-       
+        [HttpPost]
+        public ActionResult RecoveryPassword(string id,RecoveyPasswordViewModel forget)
+        {
+            using (var db = new MyEshop_DbEntities())
+            {
+                var user = db.Users.SingleOrDefault(a => a.ActiveCode == id);
+                if (user == null)
+                {
+                    HttpNotFound();
+                }
+
+                user.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(forget.Password, "MD5"); 
+                user.ActiveCode = Guid.NewGuid().ToString();
+                db.SaveChanges();
+                
+                return Redirect("/Login?recovery=true");
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>

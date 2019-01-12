@@ -44,4 +44,35 @@ namespace DataLayer.ViewModel
         [EmailAddress(ErrorMessage = "ایمیل وارد شده  معتبر نمی باشد")]
         public string Email { get; set; }
     }
+
+    public class RecoveyPasswordViewModel
+    {
+        [DisplayName("رمز عبور")]
+        [Required(ErrorMessage = "لطفا {0} وارد شود.")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+        [DisplayName("تکرار رمز عبور")]
+        [Required(ErrorMessage = "لطفا {0} وارد شود.")]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "کلمه های عبور یکسان نمی باشند")]
+        public string RePassword { get; set; }
+    }
+
+    public class ChangePasswordViewModel
+    {
+        [DisplayName("  رمز عبور قبلی")]
+        [Required(ErrorMessage = "لطفا {0} وارد شود.")]
+        [DataType(DataType.Password)]
+        public string OldPassword { get; set; }
+
+        [DisplayName("رمز عبور")]
+        [Required(ErrorMessage = "لطفا {0} وارد شود.")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+        [DisplayName("تکرار رمز عبور")]
+        [Required(ErrorMessage = "لطفا {0} وارد شود.")]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "کلمه های عبور یکسان نمی باشند")]
+        public string RePassword { get; set; }
+    }
 }
