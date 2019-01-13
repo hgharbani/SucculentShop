@@ -64,6 +64,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MyModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Product_Group.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product_GroupMetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
@@ -95,6 +99,7 @@
       <LastGenOutput>MyModel.Context.cs</LastGenOutput>
       <DependentUpon>MyModel.edmx</DependentUpon>
     </Content>
+    <Content Include="MyModel.edmx.sql" />
     <Content Include="MyModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MyModel.edmx</DependentUpon>

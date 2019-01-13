@@ -5,41 +5,41 @@ namespace DataLayer.ViewModel
 {
     public class RegisterViewModel
     {
-        [DisplayName("نام کاربری")]
+        [DisplayName(displayName: "نام کاربری")]
         [Required(ErrorMessage = "لطفا {0} وارد شود.")]
         public string UserName { get; set; }
-        [DisplayName("حساب الکترونیکی")]
+        [DisplayName(displayName: "حساب الکترونیکی")]
         [Required(ErrorMessage = "لطفا {0} وارد شود.")]
         [EmailAddress(ErrorMessage = "ایمیل وارد شده  معتبر نمی باشد")]
         public string Email { get; set; }
-        [DisplayName("رمز عبور")]
+        [DisplayName(displayName: "رمز عبور")]
         [Required(ErrorMessage = "لطفا {0} وارد شود.")]
-        [DataType(DataType.Password)]
+        [DataType(dataType: DataType.Password)]
         public string Password { get; set; }
-        [DisplayName("تکرار رمز عبور")]
+        [DisplayName(displayName: "تکرار رمز عبور")]
         [Required(ErrorMessage = "لطفا {0} وارد شود.")]
-        [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "کلمه های عبور یکسان نمی باشند")]
+        [DataType(dataType: DataType.Password)]
+        [Compare(otherProperty: "Password", ErrorMessage = "کلمه های عبور یکسان نمی باشند")]
         public string RePassword { get; set; }
     }
 
     public class LoginViewModel
     {
-        [DisplayName("حساب کاربری")]
+        [DisplayName(displayName: "حساب کاربری")]
         [Required(ErrorMessage = "لطفا {0} وارد شود.")]
         [EmailAddress(ErrorMessage = "ایمیل وارد شده  معتبر نمی باشد")]
         public string Email { get; set; }
-        [DisplayName("کلمه عبور")]
+        [DisplayName(displayName: "کلمه عبور")]
         [Required(ErrorMessage = "لطفا {0} وارد شود.")]
-        [DataType(DataType.Password)]
+        [DataType(dataType: DataType.Password)]
         public string Password { get; set; }
-        [DisplayName("مرا به خاطر بسپار")]
+        [DisplayName(displayName: "مرا به خاطر بسپار")]
         public bool RememberMe { get; set; }
     }
 
     public class ForgetPasswordViewModel
     {
-        [DisplayName("حساب کاربری")]
+        [DisplayName(displayName: "حساب کاربری")]
         [Required(ErrorMessage = "لطفا {0} وارد شود.")]
         [EmailAddress(ErrorMessage = "ایمیل وارد شده  معتبر نمی باشد")]
         public string Email { get; set; }
@@ -47,32 +47,32 @@ namespace DataLayer.ViewModel
 
     public class RecoveyPasswordViewModel
     {
-        [DisplayName("رمز عبور")]
+        [DisplayName(displayName: "رمز عبور")]
         [Required(ErrorMessage = "لطفا {0} وارد شود.")]
-        [DataType(DataType.Password)]
+        [DataType(dataType: DataType.Password)]
         public string Password { get; set; }
-        [DisplayName("تکرار رمز عبور")]
+        [DisplayName(displayName: "تکرار رمز عبور")]
         [Required(ErrorMessage = "لطفا {0} وارد شود.")]
-        [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "کلمه های عبور یکسان نمی باشند")]
+        [DataType(dataType: DataType.Password)]
+        [Compare(otherProperty: "Password", ErrorMessage = "کلمه های عبور یکسان نمی باشند")]
         public string RePassword { get; set; }
     }
 
     public class ChangePasswordViewModel
     {
-        [DisplayName("  رمز عبور قبلی")]
+        [DisplayName(displayName: "  رمز عبور قبلی")]
         [Required(ErrorMessage = "لطفا {0} وارد شود.")]
-        [DataType(DataType.Password)]
+        [DataType(dataType: DataType.Password)]
         public string OldPassword { get; set; }
 
-        [DisplayName("رمز عبور")]
+        [DisplayName(displayName: "رمز عبور")]
         [Required(ErrorMessage = "لطفا {0} وارد شود.")]
-        [DataType(DataType.Password)]
+        [DataType(dataType: DataType.Password)]
         public string Password { get; set; }
-        [DisplayName("تکرار رمز عبور")]
+        [DisplayName(displayName: "تکرار رمز عبور")]
         [Required(ErrorMessage = "لطفا {0} وارد شود.")]
-        [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "کلمه های عبور یکسان نمی باشند")]
+        [DataType(dataType: DataType.Password)]
+        [Compare(otherProperty: "Password", ErrorMessage = "کلمه های عبور یکسان نمی باشند")]
         public string RePassword { get; set; }
     }
 }
