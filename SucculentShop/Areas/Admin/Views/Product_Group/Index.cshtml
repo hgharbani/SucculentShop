@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<DataLayer.Product_Group>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "گروه محصولات";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>گروه محصولات</h2>
 
 <p>
-    <a class="btn btn-success top-10">افزودن سر گروه جدید</a>
+    <a class="btn btn-success top-10" onclick="Create()">افزودن سر گروه جدید</a>
 </p>
-<table class="table table-bordered table-responsive">
+<table class="table table-bordered table-responsive" >
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.GroupTitle)
@@ -21,30 +21,56 @@
         <th></th>
     </tr>
 
-@foreach (var group in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => group.GroupTitle)
-        </td>
-        <td>
-            @if (group.Product_Group1.Any())
-            {
-                <ul>
-                    @foreach (var subGroup in group.Product_Group1)
-                    {
-                        <li>@subGroup.GroupTitle</li>
-                    }
-                </ul>
-            }
-        </td>
-       
-        
-        <td>
-            <a class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-plus"></i></a>
-            <a class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
-            <a class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>
-        </td>
-    </tr>
-}
+    @foreach (var group in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => group.GroupTitle)
+            </td>
+            <td>
+                @if (group.Product_Group1.Any())
+                {
+                    <ul>
+                        @foreach (var subGroup in group.Product_Group1)
+                        {
+                            <li>@subGroup.GroupTitle</li>
+                        }
+                    </ul>
+                }
+            </td>
+            <td>
+                <a class="btn btn-primary btn-xs" onclick="Create"><i class="glyphicon glyphicon-plus"></i></a>
+                <a class="btn btn-warning btn-xs" onclick="Create"><i class="glyphicon glyphicon-edit"></i></a>
+                <a class="btn btn-danger btn-xs" onclick="Create"><i class="glyphicon glyphicon-trash"></i></a>
+            </td>
+        </tr>
+    }
 
 </table>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body" id="myModalId">
+                ...
+            </div>
+            <div class="modal-footer">
+               
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function Create() {
+        $.get("/Admin/Product_Group/Create",
+            function(result) {
+                $("#myModal").modal();
+                $("#myModalLabel").html("افزودن گروه جدید");
+                $("#myModalId").html(result);
+            });
+    }
+</script>

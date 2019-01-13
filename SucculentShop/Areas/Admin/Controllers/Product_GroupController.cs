@@ -39,8 +39,8 @@ namespace SucculentShop.Areas.Admin.Controllers
         // GET: Admin/Product_Group/Create
         public ActionResult Create()
         {
-            ViewBag.ParentId = new SelectList(db.Product_Group, "GroupId", "GroupTitle");
-            return View();
+           
+            return PartialView();
         }
 
         // POST: Admin/Product_Group/Create
