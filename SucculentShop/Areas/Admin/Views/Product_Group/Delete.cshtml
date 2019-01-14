@@ -5,12 +5,10 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>آیا نسبت به حذف گروه مطمئن هستید؟?</h3>
 <div>
-    <h4>Product_Group</h4>
-    <hr />
+   
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.GroupTitle)
@@ -30,12 +28,15 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Ajax.BeginForm("Delete","Product_Group",FormMethod.Post,new AjaxOptions()
+    {
+        OnSuccess = "success",
+        UpdateTargetId = "listGroups"
+    })) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div class="form-group">
+            <input type="submit" value="حذف گروه" class="btn btn-danger" /> 
         </div>
     }
 </div>

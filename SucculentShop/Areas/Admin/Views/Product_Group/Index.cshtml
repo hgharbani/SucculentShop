@@ -8,47 +8,15 @@
 <h2>گروه محصولات</h2>
 
 <p>
-    <a class="btn btn-success top-10" onclick="Create()">افزودن سر گروه جدید</a>
+    @*<button type="button" data-toggle="modal" onclick="Create()" data-target="#myModal">Launch modal</button>*@
+    <a class="btn btn-success top-10" onclick="Create()" >افزودن سر گروه جدید</a>
 </p>
-<table class="table table-bordered table-responsive" >
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.GroupTitle)
-        </th>
-        <th>
-            @Html.DisplayName("زیر گروه ها")
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var group in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => group.GroupTitle)
-            </td>
-            <td>
-                @if (group.Product_Group1.Any())
-                {
-                    <ul>
-                        @foreach (var subGroup in group.Product_Group1)
-                        {
-                            <li>@subGroup.GroupTitle</li>
-                        }
-                    </ul>
-                }
-            </td>
-            <td>
-                <a class="btn btn-primary btn-xs" onclick="Create"><i class="glyphicon glyphicon-plus"></i></a>
-                <a class="btn btn-warning btn-xs" onclick="Create"><i class="glyphicon glyphicon-edit"></i></a>
-                <a class="btn btn-danger btn-xs" onclick="Create"><i class="glyphicon glyphicon-trash"></i></a>
-            </td>
-        </tr>
-    }
-
-</table>
-
+<div id="listGroup">
+    @Html.Action("listGroups")
+</div>
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -68,9 +36,28 @@
     function Create() {
         $.get("/Admin/Product_Group/Create",
             function(result) {
-                $("#myModal").modal();
-                $("#myModalLabel").html("افزودن گروه جدید");
+                $('#myModal').modal();
+                $('#myModalLabel').html("افزودن گروه جدید");
                 $("#myModalId").html(result);
             });
+    }
+    function Edit(id) {
+        $.get("/Admin/Product_Group/Edit/"+id,
+            function(result) {
+                $('#myModal').modal();
+                $('#myModalLabel').html("افزودن گروه جدید");
+                $("#myModalId").html(result);
+            });
+    }
+    function Delete(id) {
+        $.get("/Admin/Product_Group/Delete/" + id,
+            function (result) {
+                $('#myModal').modal();
+                $('#myModalLabel').html("افزودن گروه جدید");
+                $("#myModalId").html(result);
+            });
+    }
+    function success() {
+        $('#myModal').modal('toggle','hide');
     }
 </script>

@@ -17,10 +17,15 @@ namespace SucculentShop.Areas.Admin.Controllers
         // GET: Admin/Product_Group
         public ActionResult Index()
         {
-            var product_Group = db.Product_Group.Where(a=>a.ParentId==null);
+            var product_Group = db.Product_Group.Where(a => a.ParentId == null);
             return View(product_Group.ToList());
         }
 
+        public ActionResult ListGroups()
+        {
+            var product_Group = db.Product_Group.Where(a => a.ParentId == null);
+            return PartialView(product_Group.ToList());
+        }
         // GET: Admin/Product_Group/Details/5
         public ActionResult Details(int? id)
         {
@@ -39,7 +44,7 @@ namespace SucculentShop.Areas.Admin.Controllers
         // GET: Admin/Product_Group/Create
         public ActionResult Create()
         {
-           
+
             return PartialView();
         }
 
@@ -54,11 +59,11 @@ namespace SucculentShop.Areas.Admin.Controllers
             {
                 db.Product_Group.Add(product_Group);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return PartialView("ListGroups", db.Product_Group.Where(a => a.ParentId == null).ToList());
             }
 
             ViewBag.ParentId = new SelectList(db.Product_Group, "GroupId", "GroupTitle", product_Group.ParentId);
-            return View(product_Group);
+            return PartialView(product_Group);
         }
 
         // GET: Admin/Product_Group/Edit/5
@@ -74,7 +79,7 @@ namespace SucculentShop.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             ViewBag.ParentId = new SelectList(db.Product_Group, "GroupId", "GroupTitle", product_Group.ParentId);
-            return View(product_Group);
+            return PartialView(product_Group);
         }
 
         // POST: Admin/Product_Group/Edit/5
@@ -88,10 +93,10 @@ namespace SucculentShop.Areas.Admin.Controllers
             {
                 db.Entry(product_Group).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return PartialView("ListGroups", db.Product_Group.Where(a => a.ParentId == null).ToList());
             }
-            ViewBag.ParentId = new SelectList(db.Product_Group, "GroupId", "GroupTitle", product_Group.ParentId);
             return View(product_Group);
+
         }
 
         // GET: Admin/Product_Group/Delete/5
@@ -106,7 +111,7 @@ namespace SucculentShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(product_Group);
+            return PartialView(product_Group);
         }
 
         // POST: Admin/Product_Group/Delete/5
@@ -117,7 +122,7 @@ namespace SucculentShop.Areas.Admin.Controllers
             Product_Group product_Group = db.Product_Group.Find(id);
             db.Product_Group.Remove(product_Group);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return PartialView("ListGroups", db.Product_Group.Where(a => a.ParentId == null).ToList());
         }
 
         protected override void Dispose(bool disposing)

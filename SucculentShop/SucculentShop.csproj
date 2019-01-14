@@ -198,6 +198,7 @@
     <Content Include="Areas\Admin\Views\Product_Group\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Product_Group\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Product_Group\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Product_Group\ListGroups.cshtml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
