@@ -26,6 +26,7 @@ namespace SucculentShop.Areas.Admin.Controllers
             var product_Group = db.Product_Group.Where(a => a.ParentId == null);
             return PartialView(product_Group.ToList());
         }
+
         // GET: Admin/Product_Group/Details/5
         public ActionResult Details(int? id)
         {
@@ -33,19 +34,23 @@ namespace SucculentShop.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Product_Group product_Group = db.Product_Group.Find(id);
             if (product_Group == null)
             {
                 return HttpNotFound();
             }
+
             return View(product_Group);
         }
 
         // GET: Admin/Product_Group/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-
-            return PartialView();
+            return PartialView(new Product_Group()
+            {
+                ParentId = id
+            });
         }
 
         // POST: Admin/Product_Group/Create
@@ -53,7 +58,8 @@ namespace SucculentShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "GroupId,GroupTitle,ParentId")] Product_Group product_Group)
+        public ActionResult Create([Bind(Include = "GroupId,GroupTitle,ParentId")]
+            Product_Group product_Group)
         {
             if (ModelState.IsValid)
             {
@@ -73,11 +79,13 @@ namespace SucculentShop.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Product_Group product_Group = db.Product_Group.Find(id);
             if (product_Group == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.ParentId = new SelectList(db.Product_Group, "GroupId", "GroupTitle", product_Group.ParentId);
             return PartialView(product_Group);
         }
@@ -87,7 +95,8 @@ namespace SucculentShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "GroupId,GroupTitle,ParentId")] Product_Group product_Group)
+        public ActionResult Edit([Bind(Include = "GroupId,GroupTitle,ParentId")]
+            Product_Group product_Group)
         {
             if (ModelState.IsValid)
             {
@@ -95,35 +104,34 @@ namespace SucculentShop.Areas.Admin.Controllers
                 db.SaveChanges();
                 return PartialView("ListGroups", db.Product_Group.Where(a => a.ParentId == null).ToList());
             }
+
             return View(product_Group);
-
         }
 
-        // GET: Admin/Product_Group/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product_Group product_Group = db.Product_Group.Find(id);
-            if (product_Group == null)
-            {
-                return HttpNotFound();
-            }
-            return PartialView(product_Group);
-        }
-
-        // POST: Admin/Product_Group/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        
+        public void Delete(int id)
         {
             Product_Group product_Group = db.Product_Group.Find(id);
-            db.Product_Group.Remove(product_Group);
-            db.SaveChanges();
-            return PartialView("ListGroups", db.Product_Group.Where(a => a.ParentId == null).ToList());
+            if (product_Group != null)
+            {
+                if (!product_Group.Product_Group1.Any())
+                {
+                    db.Product_Group.Remove(product_Group);
+                }
+                else
+                {
+                    foreach (var productGroup in product_Group.Product_Group1.ToList())
+                    {
+                        db.Entry(productGroup).State = EntityState.Deleted;
+                    }
+
+                    db.Product_Group.Remove(product_Group);
+                }
+
+                db.SaveChanges();
+            }
         }
+
 
         protected override void Dispose(bool disposing)
         {
@@ -131,6 +139,7 @@ namespace SucculentShop.Areas.Admin.Controllers
             {
                 db.Dispose();
             }
+
             base.Dispose(disposing);
         }
     }

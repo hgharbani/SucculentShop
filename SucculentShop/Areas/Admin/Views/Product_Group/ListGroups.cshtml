@@ -9,26 +9,30 @@
         </th>
         <th></th>
     </tr>
-
+    
     @foreach (var group in Model)
     {
-        <tr>
+        <tr id="group_@(group.GroupId)">
             <td>
                 @Html.DisplayFor(modelItem => group.GroupTitle)
+            
+
             </td>
             <td>
                 @if (group.Product_Group1.Any())
                 {
-                    <ul>
+                    <ul >
                         @foreach (var subGroup in group.Product_Group1)
                         {
-                            <li>@subGroup.GroupTitle</li>
+                            <li id="group_@(subGroup.GroupId)">@subGroup.GroupTitle<a class="text-warning" onclick="Edit(@subGroup.GroupId)"><i class="glyphicon glyphicon-edit"></i></a>
+                                <a class="text-danger" onclick="Delete(@subGroup.GroupId)"><i class="glyphicon glyphicon-trash"></i></a></li>
+                            
                         }
                     </ul>
                 }
             </td>
             <td>
-                <a class="btn btn-primary btn-xs" onclick="Create"><i class="glyphicon glyphicon-plus"></i></a>
+                <a class="btn btn-primary btn-xs" onclick="Create(@group.GroupId)"><i class="glyphicon glyphicon-plus"></i></a>
                 <a class="btn btn-warning btn-xs" onclick="Edit(@group.GroupId)"><i class="glyphicon glyphicon-edit"></i></a>
                 <a class="btn btn-danger btn-xs" onclick="Delete(@group.GroupId)"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
